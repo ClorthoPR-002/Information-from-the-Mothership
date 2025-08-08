@@ -285,8 +285,7 @@
             const mapSvg = `
                 <svg viewBox="0 0 ${svgWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg" class="map-svg w-full h-auto">
                     <!-- A simple line path to represent a connection -->
-                    <path d="M ${campaignData.mapLocations[0].x * (svgWidth/100)},${campaignData.mapLocations[0].y * (svgHeight/100)} L ${campaignData.mapLocations[1].x * (svgWidth/100)},${campaignData.mapLocations[1].y * (svgHeight/100)} L ${campaignData.mapLocations[2].x * (svgWidth/100)},${campaignData.mapLocations[2].y * (svgHeight/100)}"
-                    <path d="M ${campaignData.mapLocations[3].x * (svgWidth/100)},${campaignData.mapLocations[3].y * (svgHeight/100)} L ${campaignData.mapLocations[1].x * (svgWidth/100)},${campaignData.mapLocations[1].y * (svgHeight/100)} />
+                    <path d="M ${campaignData.mapLocations[0].x * (svgWidth/100)},${campaignData.mapLocations[0].y * (svgHeight/100)} L ${campaignData.mapLocations[1].x * (svgWidth/100)},${campaignData.mapLocations[1].y * (svgHeight/100)} L ${campaignData.mapLocations[2].x * (svgWidth/100)},${campaignData.mapLocations[2].y * (svgHeight/100)}" />
                     ${mapPoints}
                     <text x="5" y="15" class="text-sm fill-current text-white">MAP_SYSTEM.DAT</text>
                 </svg>
