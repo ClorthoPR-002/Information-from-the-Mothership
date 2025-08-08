@@ -110,54 +110,67 @@
             </p>
         </header>
 
-        <!-- Main content grid -->
-        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Left Column -->
-            <div class="space-y-8">
-                <!-- Current Crew Roster -->
-                <section>
-                    <h2 class="text-2xl font-bold mb-4 uppercase">Current Crew Roster</h2>
-                    <ul id="player-roster" class="list-disc ml-6 space-y-2">
-                        <!-- Player data will be inserted here by JavaScript -->
-                    </ul>
-                </section>
+        <!-- Main content container -->
+        <div id="main-page">
+            <!-- Main content grid -->
+            <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Left Column -->
+                <div class="space-y-8">
+                    <!-- Current Crew Roster -->
+                    <section>
+                        <h2 class="text-2xl font-bold mb-4 uppercase">Current Crew Roster</h2>
+                        <ul id="player-roster" class="list-disc ml-6 space-y-2">
+                            <!-- Player data will be inserted here by JavaScript -->
+                        </ul>
+                    </section>
 
-                <!-- Lost Crew Roster -->
-                <section>
-                    <h2 class="text-2xl font-bold mb-4 uppercase">Lost Crew: In Memoriam</h2>
-                    <ul id="lost-roster" class="list-disc ml-6 space-y-2">
-                        <!-- Lost player data will be inserted here by JavaScript -->
-                    </ul>
-                </section>
+                    <!-- Lost Crew Roster - now a navigation link -->
+                    <section>
+                        <h2 class="text-2xl font-bold mb-4 uppercase">
+                            <a href="#" class="interactable" onclick="showPage('lost-crew-page'); return false;">LOST CREW: IN MEMORIAM ></a>
+                        </h2>
+                    </section>
 
-                <!-- Important NPCs -->
-                <section>
-                    <h2 class="text-2xl font-bold mb-4 uppercase">Important NPCs</h2>
-                    <div id="npc-roster" class="space-y-4">
-                        <!-- NPC data will be inserted here by JavaScript -->
-                    </div>
-                </section>
-            </div>
+                    <!-- Important NPCs -->
+                    <section>
+                        <h2 class="text-2xl font-bold mb-4 uppercase">Important NPCs</h2>
+                        <div id="npc-roster" class="space-y-4">
+                            <!-- NPC data will be inserted here by JavaScript -->
+                        </div>
+                    </section>
+                </div>
 
-            <!-- Right Column -->
-            <div class="space-y-8">
-                <!-- Star System Map -->
-                <section>
-                    <h2 class="text-2xl font-bold mb-4 uppercase">Known Star System Map</h2>
-                    <div id="map-section" class="border-2 border-white p-4">
-                        <!-- Map SVG will be inserted here by JavaScript -->
-                    </div>
-                </section>
+                <!-- Right Column -->
+                <div class="space-y-8">
+                    <!-- Star System Map -->
+                    <section>
+                        <h2 class="text-2xl font-bold mb-4 uppercase">Known Star System Map</h2>
+                        <div id="map-section" class="border-2 border-white p-4">
+                            <!-- Map SVG will be inserted here by JavaScript -->
+                        </div>
+                    </section>
 
-                <!-- In-Game Documents -->
-                <section>
-                    <h2 class="text-2xl font-bold mb-4 uppercase">Archived Documents</h2>
-                    <ul id="in-game-docs" class="space-y-2">
-                        <!-- Pamphlet data will be inserted here by JavaScript -->
-                    </ul>
-                </section>
-            </div>
-        </main>
+                    <!-- In-Game Documents -->
+                    <section>
+                        <h2 class="text-2xl font-bold mb-4 uppercase">Archived Documents</h2>
+                        <ul id="in-game-docs" class="space-y-2">
+                            <!-- Pamphlet data will be inserted here by JavaScript -->
+                        </ul>
+                    </section>
+                </div>
+            </main>
+        </div>
+
+        <!-- Hidden Lost Crew Page -->
+        <div id="lost-crew-page" class="hidden">
+            <h2 class="text-3xl font-bold mb-6 uppercase">LOST CREW: IN MEMORIAM</h2>
+            <ul id="lost-roster" class="list-disc ml-6 space-y-2">
+                <!-- Lost player data will be inserted here by JavaScript -->
+            </ul>
+            <a href="#" class="interactable text-xl block mt-8" onclick="showPage('main-page'); return false;">
+                > RETURN TO MAIN LOG
+            </a>
+        </div>
     </div>
 
     <!-- Modal for displaying pamphlet content -->
@@ -302,7 +315,25 @@
             `).join('');
         }
 
-        // --- MODAL FUNCTIONS ---
+        // --- NAVIGATION AND MODAL FUNCTIONS ---
+
+        /**
+         * Hides all "pages" and shows the specified page.
+         * @param {string} pageId - The ID of the page to show.
+         */
+        function showPage(pageId) {
+            // Get all page containers
+            const pages = document.querySelectorAll('#main-page, #lost-crew-page');
+            
+            // Hide all pages
+            pages.forEach(page => page.classList.add('hidden'));
+
+            // Show the requested page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+            }
+        }
 
         /**
          * Opens the modal with content from a specific pamphlet.
@@ -342,6 +373,7 @@
             renderNpcRoster();
             renderMap();
             renderDocuments();
+            showPage('main-page'); // Ensure the main page is shown on load
         }
 
         // Run the initialization function when the page loads
