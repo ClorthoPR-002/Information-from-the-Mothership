@@ -190,30 +190,29 @@
             players: [
                 { name: "Kaelen Rourke", class: "Scientist", status: "Active" },
                 { name: "Serafina 'Sera' Chen", class: "Marine", status: "Active" },
-                { name: "Marcus 'Mac' Carter", class: "Android", status: "Active" }
+                { name: "Marcus 'Mac' Carter", class: "Android", status: "Active" },
+                { name: "The Warden", description: "Mysterious voice from the comms, guides the crew.", status: "Unknown" }
             ],
             lostPlayers: [
                 { name: "Dr. Evelyn Reed", cause: "Anomaly Exposure", score: 1200 },
                 { name: "Jax 'Wrench' Miller", cause: "Xenoform Attack", score: 850 }
             ],
             npcs: [
-                { name: "The Warden", description: "Mysterious voice from the comms, guides the crew.", status: "Unknown" },
                 { name: "Captain Vane", description: "Former captain of the 'Stardust' who vanished. His last known coordinates are a mystery.", status: "MIA" }
             ],
             mapLocations: [
                 { name: "Prospero's Drewm", x: 50, y: 30, description: "Infamos class X space port, where you will find everything you will ever need." },
                 { name: "Ypsilon 14", x: 70, y: 70, description: "Mining astroid with some possibly important materials" },
-                { name: "Planet Xylos V", x: 20, y: 80, description: "A terraformed planet with a colony now silent. Suspected Xenoform activity." },
                 { name: "Derelict Ship", x: 40, y: 20, description: "A large, unidentified derelict ship. No signals can be found." }
             ],
             pamphlets: [
                 {
-                    title: "Warden's Directive 7",
-                    content: "CONFIDENTIAL - CREW EYES ONLY\n\nDirective 7 outlines the procedure for handling bio-mechanical contamination. Any crew member showing signs of infestation must be quarantined or, if necessary, jettisoned immediately. The company is not liable for loss of life in these circumstances. This is for the greater good. Do not deviate from this protocol."
+                    title: "Warden's Directive 1",
+                    content: "CONFIDENTIAL - CREW EYES ONLY\n\nDirective 1 Suvive, Solve, Save...You can only choose one."
                 },
                 {
-                    title: "Station Omega-7 Manifest",
-                    content: "MANIFEST: S.S. Stardust\nCREW (4): Captain Vane, Dr. Evelyn Reed, Jax Miller, Kaelen Rourke\n\nCARGO: 10 units of Isolinear Processors, 5 units of Medical Supplies, 1 unit of a sealed Cryogenic Pod (contents unknown)."
+                    title: "Ypsilon 14 Manifest",
+                    content: "MANIFEST: Mining Base Ypsilon 14\nCREW (10): Sonya Thorton, Dr. Ethan Giovanni, Mike Draber, Ashraf Rourke, Dana Nibson, Jerome Pakalan, Kantaro Irribami, Morgan DeGraff, Rie Pipper, Rosa Demingez\n\nCARGO: Raw Ore, Black Stone from the Astroid."
                 },
             ]
         };
@@ -285,8 +284,6 @@
             const mapSvg = `
                 <svg viewBox="0 0 ${svgWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg" class="map-svg w-full h-auto">
                     <!-- A simple line path to represent a connection -->
-                    <path d="M ${campaignData.mapLocations[0].x * (svgWidth/100)},${campaignData.mapLocations[0].y * (svgHeight/100)} L ${campaignData.mapLocations[1].x * (svgWidth/100)},${campaignData.mapLocations[1].y * (svgHeight/100)} L ${campaignData.mapLocations[2].x * (svgWidth/100)},${campaignData.mapLocations[2].y * (svgHeight/100)}" />
-                    ${mapPoints}
                     <text x="5" y="15" class="text-sm fill-current text-white">MAP_SYSTEM.DAT</text>
                 </svg>
             `;
