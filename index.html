@@ -228,7 +228,7 @@
                 return;
             }
             rosterList.innerHTML = campaignData.players.map(player => `
-                <li class="interactable">[STATUS: ${player.status}] - ${player.name} (${player.class})</li>
+                <li class="interactable">${player.name} (${player.class}) - [STATUS: ${player.status}]</li>
             `).join('');
         }
 
