@@ -158,6 +158,17 @@
                     </section>
                 </div>
             </main>
+            
+            <hr class="my-8 border-white">
+            
+            <!-- Job Board Section -->
+            <section id="job-board-section">
+                <h2 class="text-2xl font-bold mb-4 uppercase">JOBS BOARD: CURRENT PAYLOADS</h2>
+                <div id="job-board-list" class="space-y-4">
+                    <!-- Job data will be inserted here by JavaScript -->
+                </div>
+            </section>
+
         </div>
 
         <!-- Hidden Lost Crew Page -->
@@ -199,14 +210,14 @@
         const campaignData = {
             players: [
                 { name: "Kaelen Rourke", class: "Scientist", status: "Active" },
-                { name: "Serafina 'Sera' Chen", class: "Marine", status: "Active" },
-                { name: "Warden", class: "Mysterious voice from the comms, crew guide.", status: "Unknown" }
+                { name: "Serafina 'Sera' Chen", class: "Marine", status: "Active" }
             ],
             lostPlayers: [
                 { name: "Kane", cause: "Anomaly Exposure", score: 1 },
                 { name: "Hoban Washburne", cause: "Impaled", score: 15 }
             ],
             npcs: [
+                { name: "The Warden", description: "Mysterious voice from the comms, guides the crew.", status: "Unknown" },
                 { name: "Angus", description: "Data broker.", status: "Active" }
             ],
             mapLocations: [
@@ -225,6 +236,21 @@
                     title: "Ypsilon 14 Manifest",
                     content: "MANIFEST: Mining Base Ypsilon 14\nCREW (10): Sonya Thorton, Dr. Ethan Giovanni, Mike Draber, Ashraf Rourke, Dana Nibson, Jerome Pakalan, Kantaro Irribami, Morgan DeGraff, Rie Pipper, Rosa Demingez\n\nCARGO: Raw Ore, Black Stone from the Astroid."
                 },
+            ],
+            jobs: [
+                // Add new job listings here.
+                {
+                    title: "Deep-Space Salvage: The 'Stardust'",
+                    client: "Weyland-Yutani Corp.",
+                    description: "Retrieve black box and any valuable cargo from the derelict vessel 'Stardust'. Last known location: Derelict Ship coordinates.",
+                    reward: "5,000 Credits"
+                },
+                {
+                    title: "Survey: Planet Xylos V",
+                    client: "Galactic Cartography Guild",
+                    description: "Conduct a full geological survey of Planet Xylos V. High-risk, high-reward mission. Caution: Silent colony reported.",
+                    reward: "8,000 Credits"
+                }
             ]
         };
 
@@ -292,15 +318,8 @@
                 <circle cx="${loc.x * (svgWidth/100)}" cy="${loc.y * (svgHeight/100)}" r="5" data-name="${loc.name}" data-desc="${loc.description}" />
             `).join('');
 
-            // This line of code draws the connections.
-            // M = Move to (start point), L = Line to (next point).
             const mapSvg = `
                 <svg viewBox="0 0 ${svgWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg" class="map-svg w-full h-auto">
-                    <!--
-                        This path element draws lines between the locations.
-                        The example below connects locations at index 0, 1, 2, and 3 in a continuous line.
-                        You can add more 'L' commands to connect more points.
-                    -->
                     ${mapPoints}
                     <text x="5" y="15" class="text-sm fill-current text-white">MAP_SYSTEM.DAT</text>
                 </svg>
@@ -313,6 +332,25 @@
                     alert(`Location: ${circle.dataset.name}\nDescription: ${circle.dataset.desc}`);
                 });
             });
+        }
+        
+        /**
+         * Renders the job board list.
+         */
+        function renderJobBoard() {
+            const jobList = document.getElementById('job-board-list');
+            if (!jobList) {
+                console.error("Could not find job-board-list element.");
+                return;
+            }
+            jobList.innerHTML = campaignData.jobs.map(job => `
+                <div class="border-2 border-white p-4">
+                    <h4 class="text-xl font-bold uppercase mb-2">${job.title}</h4>
+                    <p class="text-sm">Client: ${job.client}</p>
+                    <p class="text-sm">Reward: ${job.reward}</p>
+                    <p class="text-sm mt-2">${job.description}</p>
+                </div>
+            `).join('');
         }
 
         /**
@@ -388,6 +426,7 @@
             renderLostRoster();
             renderNpcRoster();
             renderMap();
+            renderJobBoard();
             renderDocuments();
             showPage('main-page'); // Ensure the main page is shown on load
         }
