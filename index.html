@@ -137,6 +137,13 @@
                             <a href="#" class="interactable" onclick="showPage('npc-page'); return false;">IMPORTANT NPCS ></a>
                         </h2>
                     </section>
+                    
+                    <!-- In-Game Documents - now a navigation link -->
+                    <section>
+                        <h2 class="text-2xl font-bold mb-4 uppercase">
+                            <a href="#" class="interactable" onclick="showPage('documents-page'); return false;">ARCHIVED DOCUMENTS ></a>
+                        </h2>
+                    </section>
                 </div>
 
                 <!-- Right Column -->
@@ -148,26 +155,18 @@
                             <!-- Map SVG will be inserted here by JavaScript -->
                         </div>
                     </section>
-
-                    <!-- In-Game Documents -->
-                    <section>
-                        <h2 class="text-2xl font-bold mb-4 uppercase">Archived Documents</h2>
-                        <ul id="in-game-docs" class="space-y-2">
-                            <!-- Pamphlet data will be inserted here by JavaScript -->
-                        </ul>
+                    
+                    <hr class="my-8 border-white">
+                    
+                    <!-- Job Board Section -->
+                    <section id="job-board-section">
+                        <h2 class="text-2xl font-bold mb-4 uppercase">JOBS BOARD: CURRENT PAYLOADS</h2>
+                        <div id="job-board-list" class="space-y-4">
+                            <!-- Job data will be inserted here by JavaScript -->
+                        </div>
                     </section>
                 </div>
             </main>
-            
-            <hr class="my-8 border-white">
-            
-            <!-- Job Board Section -->
-            <section id="job-board-section">
-                <h2 class="text-2xl font-bold mb-4 uppercase">JOBS BOARD: CURRENT PAYLOADS</h2>
-                <div id="job-board-list" class="space-y-4">
-                    <!-- Job data will be inserted here by JavaScript -->
-                </div>
-            </section>
 
         </div>
 
@@ -192,6 +191,17 @@
                 > RETURN TO MAIN LOG
             </a>
         </div>
+        
+        <!-- Hidden Documents Page -->
+        <div id="documents-page" class="hidden">
+            <h2 class="text-3xl font-bold mb-6 uppercase">ARCHIVED DOCUMENTS</h2>
+            <ul id="in-game-docs" class="space-y-2">
+                <!-- Pamphlet data will be inserted here by JavaScript -->
+            </ul>
+            <a href="#" class="interactable text-xl block mt-8" onclick="showPage('main-page'); return false;">
+                > RETURN TO MAIN LOG
+            </a>
+        </div>
     </div>
 
     <!-- Modal for displaying pamphlet content -->
@@ -211,6 +221,7 @@
             players: [
                 { name: "Kaelen Rourke", class: "Scientist", status: "Active" },
                 { name: "Serafina 'Sera' Chen", class: "Marine", status: "Active" },
+                // This entry for the Warden is now correctly formatted as a player
                 { name: "Warden", class: "Mysterious voice from the comms, crew guide.", status: "unknown" }
             ],
             lostPlayers: [
@@ -243,8 +254,15 @@
                     title: "Information Retrieval",
                     client: "CANYONHEAVY.MARKET",
                     description: "Retrive any information and samples from Dr. Ethan Giovanni, currently aboard the mining station on Ypsilon 14",
-                    reward: 
+                    reward: "5,000 Credits" // Fixed missing reward value
+                },
+                {
+                    title: "Survey: Planet Xylos V",
+                    client: "Galactic Cartography Guild",
+                    description: "Conduct a full geological survey of Planet Xylos V. High-risk, high-reward mission. Caution: Silent colony reported.",
+                    reward: "8,000 Credits"
                 }
+            ]
         };
 
         // --- DYNAMIC CONTENT GENERATION FUNCTIONS ---
@@ -258,9 +276,15 @@
                 console.error("Could not find player-roster element.");
                 return;
             }
-            rosterList.innerHTML = campaignData.players.map(player => `
-                <li class="interactable">${player.name} (${player.class}) - [STATUS: ${player.status}]</li>
-            `).join('');
+            rosterList.innerHTML = campaignData.players.map(player => {
+                // This checks if the player's status is 'unknown'.
+                // If it is, it uses the 'class' property as a description.
+                if (player.status === 'unknown') {
+                    return `<li class="interactable">${player.name} - [ROLE: ${player.class}]</li>`;
+                } else {
+                    return `<li class="interactable">${player.name} (${player.class}) - [STATUS: ${player.status}]</li>`;
+                }
+            }).join('');
         }
 
         /**
@@ -370,7 +394,7 @@
          */
         function showPage(pageId) {
             // Get all page containers
-            const pages = document.querySelectorAll('#main-page, #lost-crew-page, #npc-page');
+            const pages = document.querySelectorAll('#main-page, #lost-crew-page, #npc-page, #documents-page');
             
             // Hide all pages
             pages.forEach(page => page.classList.add('hidden'));
