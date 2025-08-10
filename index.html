@@ -134,9 +134,8 @@
                     <!-- Important NPCs -->
                     <section>
                         <h2 class="text-2xl font-bold mb-4 uppercase">Important NPCs</h2>
-                        <div id="npc-roster" class="space-y-4">
-                            <!-- NPC data will be inserted here by JavaScript -->
-                        </div>
+                            <a href="#" class="interactable" onclick="showPage('important-npcs'); return false;">IMPORTNAT NPCs ></a>
+                        </h2>
                     </section>
                 </div>
 
@@ -171,6 +170,16 @@
                 > RETURN TO MAIN LOG
             </a>
         </div>
+
+        <div id="important-npcs" class="hidden">
+            <h2 class="text-3xl font-bold mb-6 uppercase">Importnat NPCs</h2>
+            <ul id="npc-roster" class="list-disc ml-6 space-y-4">
+                <!-- Lost player data will be inserted here by JavaScript -->
+            </ul>
+            <a href="#" class="interactable text-xl block mt-8" onclick="showPage('main-page'); return false;">
+                > RETURN TO MAIN LOG
+            </a>
+        </div>    
     </div>
 
     <!-- Modal for displaying pamphlet content -->
