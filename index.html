@@ -131,10 +131,10 @@
                         </h2>
                     </section>
 
-                    <!-- Important NPCs -->
+                    <!-- Important NPCs - now a navigation link -->
                     <section>
-                        <h2 class="text-2xl font-bold mb-4 uppercase">Important NPCs</h2>
-                            <a href="#" class="interactable" onclick="showPage('important-npcs'); return false;">IMPORTNAT NPCs ></a>
+                        <h2 class="text-2xl font-bold mb-4 uppercase">
+                            <a href="#" class="interactable" onclick="showPage('npc-page'); return false;">IMPORTANT NPCS ></a>
                         </h2>
                     </section>
                 </div>
@@ -170,16 +170,17 @@
                 > RETURN TO MAIN LOG
             </a>
         </div>
-
-        <div id="important-npcs" class="hidden">
-            <h2 class="text-3xl font-bold mb-6 uppercase">Importnat NPCs</h2>
-            <ul id="npc-roster" class="list-disc ml-6 space-y-4">
-                <!-- Lost player data will be inserted here by JavaScript -->
-            </ul>
+        
+        <!-- Hidden NPC Page -->
+        <div id="npc-page" class="hidden">
+            <h2 class="text-3xl font-bold mb-6 uppercase">IMPORTANT NPCS</h2>
+            <div id="npc-roster" class="space-y-4">
+                <!-- NPC data will be inserted here by JavaScript -->
+            </div>
             <a href="#" class="interactable text-xl block mt-8" onclick="showPage('main-page'); return false;">
                 > RETURN TO MAIN LOG
             </a>
-        </div>    
+        </div>
     </div>
 
     <!-- Modal for displaying pamphlet content -->
@@ -198,17 +199,19 @@
         const campaignData = {
             players: [
                 { name: "Kaelen Rourke", class: "Scientist", status: "Active" },
-                { name: "Serafina 'Sera' Chen", class: "Marine", status: "Active" },
-                { name: "The Warden", description: "Mysterious voice from the comms, guides the crew.", status: "Unknown" }
+                { name: "Serafina 'Sera' Chen", class: "Marine", status: "Active" }
             ],
             lostPlayers: [
                 { name: "Kane", cause: "Anomaly Exposure", score: 1 },
                 { name: "Hoban Washburne", cause: "Impaled", score: 15 }
             ],
             npcs: [
+                { name: "The Warden", description: "Mysterious voice from the comms, guides the crew.", status: "Unknown" },
                 { name: "Angus", description: "Data broker.", status: "Active" }
             ],
             mapLocations: [
+                // Edit these objects to change the map locations.
+                // x and y are coordinates from 0-100, representing a percentage of the map's width and height.
                 { name: "Prospero's Drewm", x: 50, y: 30, description: "Infamos class X space port, where you will find everything you will ever need." },
                 { name: "Ypsilon 14", x: 70, y: 70, description: "Mining astroid with some possibly important materials" },
                 { name: "Derelict Ship", x: 40, y: 20, description: "A large, unidentified derelict ship. No signals can be found." }
@@ -289,10 +292,16 @@
                 <circle cx="${loc.x * (svgWidth/100)}" cy="${loc.y * (svgHeight/100)}" r="5" data-name="${loc.name}" data-desc="${loc.description}" />
             `).join('');
 
+            // This line of code draws the connections.
+            // M = Move to (start point), L = Line to (next point).
             const mapSvg = `
                 <svg viewBox="0 0 ${svgWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg" class="map-svg w-full h-auto">
-                    <!-- A simple line path to represent a connection -->
-                    const mapSvg = <path d="M ${campaignData.mapLocations[0].x * (svgWidth/100)},${campaignData.mapLocations[0].y * (svgHeight/100)} M ${campaignData.mapLocations[1].x * (svgWidth/100)},${campaignData.mapLocations[1].y * (svgHeight/100)} M ${campaignData.mapLocations[2].x * (svgWidth/100)},${campaignData.mapLocations[2].y * (svgHeight/100)}" />
+                    <!--
+                        This path element draws lines between the locations.
+                        The example below connects locations at index 0, 1, 2, and 3 in a continuous line.
+                        You can add more 'L' commands to connect more points.
+                    -->
+                    <path d="M ${campaignData.mapLocations[0].x * (svgWidth/100)},${campaignData.mapLocations[0].y * (svgHeight/100)} L ${campaignData.mapLocations[1].x * (svgWidth/100)},${campaignData.mapLocations[1].y * (svgHeight/100)} L ${campaignData.mapLocations[2].x * (svgWidth/100)},${campaignData.mapLocations[2].y * (svgHeight/100)}" />
                     ${mapPoints}
                     <text x="5" y="15" class="text-sm fill-current text-white">MAP_SYSTEM.DAT</text>
                 </svg>
@@ -331,7 +340,7 @@
          */
         function showPage(pageId) {
             // Get all page containers
-            const pages = document.querySelectorAll('#main-page, #lost-crew-page');
+            const pages = document.querySelectorAll('#main-page, #lost-crew-page, #npc-page');
             
             // Hide all pages
             pages.forEach(page => page.classList.add('hidden'));
