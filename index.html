@@ -155,18 +155,16 @@
                             <!-- Map SVG will be inserted here by JavaScript -->
                         </div>
                     </section>
-                    
-                    <hr class="my-8 border-white">
-                    
-                    <!-- Job Board Section -->
-                    <section id="job-board-section">
-                        <h2 class="text-2xl font-bold mb-4 uppercase">JOBS BOARD: CURRENT PAYLOADS</h2>
-                        <div id="job-board-list" class="space-y-4">
-                            <!-- Job data will be inserted here by JavaScript -->
-                        </div>
-                    </section>
                 </div>
             </main>
+            
+            <!-- Job Board Section -->
+            <section id="contracts-section" class="mt-8">
+                <h2 class="text-2xl font-bold mb-4 uppercase">CONTRACTS: CURRENT PAYLOADS</h2>
+                <div id="contracts-list" class="space-y-4">
+                    <!-- Job data will be inserted here by JavaScript -->
+                </div>
+            </section>
 
         </div>
 
@@ -354,10 +352,10 @@
         /**
          * Renders the job board list.
          */
-        function renderJobBoard() {
-            const jobList = document.getElementById('job-board-list');
+        function renderContracts() {
+            const jobList = document.getElementById('contracts-list');
             if (!jobList) {
-                console.error("Could not find job-board-list element.");
+                console.error("Could not find contracts-list element.");
                 return;
             }
             jobList.innerHTML = campaignData.jobs.map(job => `
@@ -443,7 +441,7 @@
             renderLostRoster();
             renderNpcRoster();
             renderMap();
-            renderJobBoard();
+            renderContracts();
             renderDocuments();
             showPage('main-page'); // Ensure the main page is shown on load
         }
